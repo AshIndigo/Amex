@@ -3,6 +3,7 @@ package com.ashindigo.amex;
 import com.ashindigo.amex.item.AmexArmor;
 import com.ashindigo.amex.upgradetable.UpgradeTableContainer;
 import com.ashindigo.amex.upgradetable.UpgradeTableScreen;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
@@ -45,6 +46,7 @@ public class AmexModClient implements ClientModInitializer {
                 if (ModuleManager.hasModule(stack, ModuleManager.LIGHT)) {
                     instance.textRenderer.draw(instance.world.getLightLevel(instance.player.getBlockPos()) + "/" + instance.world.getMaxLightLevel(), i + 16, 4, 8421504);
                 }
+                instance.textRenderer.draw(ModuleManager.getTotalPower(instance.player) + "/" + ModuleManager.getMaxPower(instance.player), i, i-32, 8421504);
             }
         }
     }

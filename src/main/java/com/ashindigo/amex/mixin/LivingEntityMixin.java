@@ -27,6 +27,7 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "computeFallDamage(FF)I", at = @At("RETURN"), cancellable = true)
     protected void calculateFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Integer> info) {
         if (ModuleManager.hasModule(this.getEquippedStack(EquipmentSlot.FEET), ModuleManager.FALL_RESIST)) {
+            ModuleManager.takePowerWithCheck((LivingEntity) world.getEntityById(getEntityId()), ModuleManager.FALL_RESIST.powerUsage());
             info.setReturnValue(0);
             info.cancel();
         }
@@ -36,6 +37,7 @@ public abstract class LivingEntityMixin extends Entity {
     protected void getJumpVelocity(CallbackInfoReturnable<Float> info) {
         if (ModuleManager.hasModule(this.getEquippedStack(EquipmentSlot.FEET), ModuleManager.JUMP)) {
             info.setReturnValue(0.42F * this.getJumpVelocityMultiplier() + ((1 + ModuleManager.getConfiguredValue(this.getEquippedStack(EquipmentSlot.FEET), ModuleManager.JUMP)) *.1F)); // Config value is how many blocks higher the player can jump
+            ModuleManager.takePowerWithCheck((LivingEntity) world.getEntityById(getEntityId()), ModuleManager.JUMP.powerUsage());
             info.cancel();
         }
     }

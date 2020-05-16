@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
@@ -29,6 +30,15 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             if (ModuleManager.hasModule(itemStack, ModuleManager.ELYTRA)) {
                 startFallFlying();
                 info.setReturnValue(true);
+            }
+        }
+    }
+
+    @Inject(method= "attackLivingEntity(Lnet/minecraft/entity/LivingEntity;)V", at = @At("RETURN"))
+    protected void attackLivingEntity(LivingEntity entity, CallbackInfo info) {
+        if (entity.isAttackable() && !entity.handleAttack(entity)) {
+            if (ModuleManager.hasModule(this.getEquippedStack(EquipmentSlot.CHEST), ModuleManager.DAMAGE)) {
+                ModuleManager.takePowerWithCheck(entity, ModuleManager.DAMAGE.powerUsage());
             }
         }
     }

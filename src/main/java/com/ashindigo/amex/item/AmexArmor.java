@@ -3,11 +3,13 @@ package com.ashindigo.amex.item;
 import com.ashindigo.amex.BlankArmorMaterial;
 import com.ashindigo.amex.ModuleManager;
 import com.ashindigo.amex.modules.AmexModule;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -33,8 +35,11 @@ public class AmexArmor extends ArmorItem {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         for (AmexModule module : ModuleManager.getModulesOnArmor(stack)) {
-            module.onTick(stack, entity);
+            if (entity instanceof LivingEntity) {
+                module.onTick(stack, (LivingEntity) entity);
+            }
         }
+
     }
 
     @Override

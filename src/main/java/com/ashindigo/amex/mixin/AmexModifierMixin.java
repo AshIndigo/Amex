@@ -1,6 +1,7 @@
 package com.ashindigo.amex.mixin;
 
 import com.ashindigo.amex.AmexHelper;
+import com.ashindigo.amex.ModuleManager;
 import com.ashindigo.amex.item.AmexArmor;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.EquipmentSlot;

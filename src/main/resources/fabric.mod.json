@@ -9,8 +9,8 @@
     "AshIndigo", "Elusive Ocelot"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "localhost",
+    "sources": "https://github.com/AshIndigo/Amex"
   },
 
   "license": "CC0-1.0",
@@ -23,6 +23,9 @@
     ],
     "client": [
       "com.ashindigo.amex.AmexModClient"
+    ],
+    "modmenu": [
+      "com.ashindigo.amex.AmexModMenu"
     ]
   },
   "mixins": [
@@ -32,6 +35,8 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.16.x"
+    "minecraft": "1.16.x",
+    "autoconfig1u": ">=2.1.0",
+    "cloth-config2": ">=3.3.1-unstable"
   }
 }

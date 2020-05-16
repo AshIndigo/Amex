@@ -27,5 +27,22 @@
   "desc.module.damage": "Implanted artificial muscles allow for increased attack damage",
   "desc.module.speed": "Implanted artificial muscle allows for increased movement speed",
   "desc.module.fall_resist": "Implanted gel pads protect against fall damage",
-  "desc.module.jump": "Implanted artificial muscle allows for increased jump height"
+  "desc.module.jump": "Implanted artificial muscle allows for increased jump height",
+  "text.autoconfig.amex.option.maxPower": "Max Power per armor piece",
+  "text.autoconfig.amex.option.powerUsageValues": "Power usage for modules",
+  "text.autoconfig.amex.option.powerUsageValues.ironPlatingPower": "Iron Plating power usage",
+  "text.autoconfig.amex.option.powerUsageValues.diamondPlatingPower": "Diamond Plating power usage",
+  "text.autoconfig.amex.option.powerUsageValues.elytraUsage": "Elytra power usage",
+  "text.autoconfig.amex.option.powerUsageValues.rebreatherPower": "Rebrather power usage",
+  "text.autoconfig.amex.option.powerUsageValues.speedUsage": "Speed upgrade power usage",
+  "text.autoconfig.amex.option.powerUsageValues.damageUsage": "Damage upgrade power usage",
+  "text.autoconfig.amex.option.powerUsageValues.jumpUsage": "Jump boost power usage",
+  "text.autoconfig.amex.option.powerUsageValues.fallResistUsage": "Fall pads power usage",
+  "text.autoconfig.amex.option.powerUsageValues.compassUsage": "Compass HUD power usage",
+  "text.autoconfig.amex.option.powerUsageValues.clockUsage": "Clock HUD power usage",
+  "text.autoconfig.amex.option.powerUsageValues.lightUsage": "Light Level HUD power usage",
+  "text.autoconfig.amex.option.generatorValues": "Power generation",
+  "text.autoconfig.amex.option.generatorValues.kineticGenerator": "Kinetic power generation",
+  "text.autoconfig.amex.option.generatorValues.solarGenerator": "Solar power generation",
+  "text.autoconfig.amex.option.generatorValues.heatGenerator": "Thermal power generation"
 }
