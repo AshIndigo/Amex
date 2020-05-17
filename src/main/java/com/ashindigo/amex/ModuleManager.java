@@ -6,7 +6,6 @@ import com.ashindigo.amex.modules.AmexGeneratorModule;
 import com.ashindigo.amex.modules.AmexModule;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorMaterials;
 import net.minecraft.item.ItemStack;
@@ -39,20 +38,20 @@ public class ModuleManager {
     // Modules
     public static final AmexArmorModule IRON_PLATING = (AmexArmorModule) register(new AmexArmorModule(new Identifier(AmexMod.MODID, "iron_plating"), new ItemStack(ItemRegistry.IRON_PLATING), new float[]{2, 5, 6, 2}, HelperMethods.fillArray(ArmorMaterials.IRON.getToughness(), 4), allSlots, false, () -> AmexMod.config.powerUsageValues.ironPlatingPower));
     public static final AmexArmorModule DIAMOND_PLATING = (AmexArmorModule) register(new AmexArmorModule(new Identifier(AmexMod.MODID, "diamond_plating"), new ItemStack(ItemRegistry.DIAMOND_PLATING), new float[]{3, 6, 8, 3}, HelperMethods.fillArray(ArmorMaterials.DIAMOND.getToughness(), 4), allSlots, false, () -> AmexMod.config.powerUsageValues.diamondPlatingPower));
-    public static final AmexModule REBREATHER = register(new AmexModule(new Identifier(AmexMod.MODID, "rebreather"), new ItemStack(ItemRegistry.REBREATHER), new EquipmentSlot[]{EquipmentSlot.HEAD}, false, () -> 5) {
+    public static final AmexModule REBREATHER = register(new AmexModule(new Identifier(AmexMod.MODID, "rebreather"), new ItemStack(ItemRegistry.REBREATHER), new EquipmentSlot[]{EquipmentSlot.HEAD}, false, () -> AmexMod.config.powerUsageValues.rebreatherPower) {
         @Override
-        public void onTick(ItemStack stack, LivingEntity entity) {
+        public void onTick(ItemStack stack, PlayerEntity entity) {
             if (entity.getAir() < 50) {
                 entity.setAir(entity.getMaxAir());
-                ModuleManager.takePowerStack(stack, powerUsage());
+                ModuleManager.takePowerWithCheck(entity, powerUsage());
             }
         }
     });
     public static final AmexModule ELYTRA = register(new AmexModule(new Identifier(AmexMod.MODID, "elytra"), new ItemStack(Items.ELYTRA), new EquipmentSlot[]{EquipmentSlot.CHEST}, false, () -> AmexMod.config.powerUsageValues.elytraUsage) {
         @Override
-        public void onTick(ItemStack stack, LivingEntity entity) {
-            if (entity instanceof PlayerEntity) {
-                if (((PlayerEntity) entity).checkFallFlying()) {
+        public void onTick(ItemStack stack, PlayerEntity entity) {
+            if (entity != null) {
+                if (entity.checkFallFlying()) {
                     super.onTick(stack, entity);
                 }
             }
@@ -60,23 +59,23 @@ public class ModuleManager {
     });
     public static final AmexModule SPEED = register(new AmexModule(new Identifier(AmexMod.MODID, "speed"), new ItemStack(ItemRegistry.ARTIFICIAL_MUSCLE), new EquipmentSlot[]{EquipmentSlot.LEGS}, true, () -> AmexMod.config.powerUsageValues.speedUsage) {
         @Override
-        public void onTick(ItemStack stack, LivingEntity entity) {
+        public void onTick(ItemStack stack, PlayerEntity entity) {
             if (entity.getVelocity().x < 1 || entity.getVelocity().z < 0.04) {
                 super.onTick(stack, entity);
-                ModuleManager.takePowerStack(stack, 5);
+                ModuleManager.takePowerWithCheck(entity, powerUsage());
             }
         }
     });
     public static final AmexModule DAMAGE = register(new AmexModule(new Identifier(AmexMod.MODID, "damage"), new ItemStack(ItemRegistry.ARTIFICIAL_MUSCLE), new EquipmentSlot[]{EquipmentSlot.CHEST}, true, () -> AmexMod.config.powerUsageValues.damageUsage));
     public static final AmexModule JUMP = register(new AmexModule(new Identifier(AmexMod.MODID, "jump"), new ItemStack(ItemRegistry.ARTIFICIAL_MUSCLE), new EquipmentSlot[]{EquipmentSlot.FEET}, true, () -> AmexMod.config.powerUsageValues.jumpUsage) {
         @Override
-        public void onTick(ItemStack stack, LivingEntity entity) {
+        public void onTick(ItemStack stack, PlayerEntity entity) {
             // NO-OP
         }
     });
     public static final AmexModule FALL_RESIST = register(new AmexModule(new Identifier(AmexMod.MODID, "fall_resist"), new ItemStack(ItemRegistry.FALL_PADS), new EquipmentSlot[]{EquipmentSlot.FEET}, false, () -> AmexMod.config.powerUsageValues.fallResistUsage) {
         @Override
-        public void onTick(ItemStack stack, LivingEntity entity) {
+        public void onTick(ItemStack stack, PlayerEntity entity) {
             // NO-OP
         }
     });
@@ -89,21 +88,21 @@ public class ModuleManager {
     // Generators
     public static final AmexGeneratorModule HEAT = (AmexGeneratorModule) register(new AmexGeneratorModule(new Identifier(AmexMod.MODID, "heat_gen"), new ItemStack(ItemRegistry.HEAT_GEN), new EquipmentSlot[]{EquipmentSlot.CHEST}, false, () -> AmexMod.config.generatorValues.heatGenerator) {
         @Override
-        public void onTick(ItemStack stack, LivingEntity entity) {
+        public void onTick(ItemStack stack, PlayerEntity entity) {
             // Gotta check if entity is close to heat
         }
     });
     public static final AmexGeneratorModule SOLAR = (AmexGeneratorModule) register(new AmexGeneratorModule(new Identifier(AmexMod.MODID, "solar_gen"), new ItemStack(ItemRegistry.SOLAR_GEN), new EquipmentSlot[]{EquipmentSlot.HEAD}, false, () -> AmexMod.config.generatorValues.solarGenerator) {
         @Override
-        public void onTick(ItemStack stack, LivingEntity entity) {
+        public void onTick(ItemStack stack, PlayerEntity entity) {
             if (entity.world.isDay() && entity.world.isSkyVisible(entity.getBlockPos())) {
-                ModuleManager.addPower(entity, getPowerGen());
+                ModuleManager.addPowerWithCheck(entity, getPowerGen());
             }
         }
     });
     public static final AmexGeneratorModule KINETIC = (AmexGeneratorModule) register(new AmexGeneratorModule(new Identifier(AmexMod.MODID, "kinetic_gen"), new ItemStack(ItemRegistry.KINETIC_GEN), new EquipmentSlot[]{EquipmentSlot.LEGS}, false, () -> AmexMod.config.generatorValues.kineticGenerator) {
         @Override
-        public void onTick(ItemStack stack, LivingEntity entity) {
+        public void onTick(ItemStack stack, PlayerEntity entity) {
             if (entity.getVelocity().x > 0.04 || entity.getVelocity().z > 0.04) {
                 super.onTick(stack, entity);
             }
@@ -158,7 +157,7 @@ public class ModuleManager {
     /**
      * Add the given module to the given armor piece
      *
-     * @param armor  The Chestplate to install the module onto
+     * @param armor  The armor to install the module onto
      * @param module The module to install
      */
     @SuppressWarnings("ConstantConditions")
@@ -279,15 +278,16 @@ public class ModuleManager {
         }
     }
 
-    public static boolean takePowerWithCheck(LivingEntity entity, int powerUsage) {
+    public static boolean takePowerWithCheck(PlayerEntity entity, int powerUsage) {
         if (getTotalPower(entity) > powerUsage) {
             takePower(entity, powerUsage);
+            entity.inventory.markDirty();
             return true;
         }
         return false;
     }
 
-    static void takePower(LivingEntity entity, int powerUsage) {
+    static void takePower(PlayerEntity entity, int powerUsage) {
         int remPower = powerUsage;
         if (entity.getEquippedStack(EquipmentSlot.HEAD).getItem() instanceof AmexArmor) {
             remPower = takePowerStack(entity.getEquippedStack(EquipmentSlot.HEAD), remPower);
@@ -310,6 +310,7 @@ public class ModuleManager {
         if (stack.getOrCreateTag().getInt(ENERGYKEY) > 0) {
             power = stack.getOrCreateTag().getInt(ENERGYKEY) - power;
             stack.getOrCreateTag().putInt(ENERGYKEY, Math.max(0, stack.getOrCreateTag().getInt(ENERGYKEY) - power));
+
             if (power >= 0) {
                 return 0;
             } else {
@@ -319,16 +320,17 @@ public class ModuleManager {
         return power;
     }
 
-    public static boolean addPowerWithCheck(LivingEntity entity, int powerUsage) {
-        if (getTotalPower(entity) == getMaxPower(entity)) {
+    public static boolean addPowerWithCheck(PlayerEntity entity, int powerUsage) {
+        if (!entity.world.isClient && getTotalPower(entity) == getMaxPower(entity)) {
             return false;
         }
         addPower(entity, powerUsage);
+        entity.inventory.markDirty();
         return false;
     }
 
 
-    static void addPower(LivingEntity entity, int powerUsage) {
+    static void addPower(PlayerEntity entity, int powerUsage) {
         int remPower = powerUsage;
         if (entity.getEquippedStack(EquipmentSlot.HEAD).getItem() instanceof AmexArmor && getCurrentPower(entity.getEquippedStack(EquipmentSlot.HEAD)) < AmexMod.config.maxPower) {
             remPower = addPowerStack(entity.getEquippedStack(EquipmentSlot.HEAD), remPower);
@@ -344,28 +346,24 @@ public class ModuleManager {
         }
     }
 
-    private static int getCurrentPower(ItemStack equippedStack) {
+    public static int getCurrentPower(ItemStack equippedStack) {
         return equippedStack.getOrCreateTag().getInt(ENERGYKEY);
     }
 
     static int addPowerStack(ItemStack stack, int power) {
-        if (stack.getOrCreateTag().getInt(ENERGYKEY) > 0) {
+        //if (stack.getOrCreateTag().getInt(ENERGYKEY) > 0) {
             power = (stack.getOrCreateTag().getInt(ENERGYKEY) + power) - AmexMod.config.maxPower;
             stack.getOrCreateTag().putInt(ENERGYKEY, Math.max(AmexMod.config.maxPower, stack.getOrCreateTag().getInt(ENERGYKEY) + power));
             return Math.max(power, 0);
-        }
-        return power;
+        //}
+        //return power;
     }
 
-    public static boolean hasPower(ItemStack stack, int power) {
-        return hasPower(stack.getOrCreateTag(), power);
+    public static boolean hasPower(PlayerEntity entity, int power) {
+        return getTotalPower(entity) >= power;
     }
 
-    public static boolean hasPower(CompoundTag tag, int power) {
-        return tag.getInt(ENERGYKEY) >= power;
-    }
-
-    public static int getTotalPower(Entity entity) {
+    public static int getTotalPower(PlayerEntity entity) {
         int power = 0;
         for (ItemStack stack : entity.getArmorItems()) {
             power += stack.getItem() instanceof AmexArmor ? (stack.getOrCreateTag().getInt(ENERGYKEY)) : 0;
@@ -373,7 +371,7 @@ public class ModuleManager {
         return power;
     }
 
-    public static int getMaxPower(LivingEntity entity) {
+    public static int getMaxPower(PlayerEntity entity) {
         int max = 0;
         if (entity.getEquippedStack(EquipmentSlot.HEAD).getItem() instanceof AmexArmor) {
             max += AmexMod.config.maxPower;
@@ -388,5 +386,9 @@ public class ModuleManager {
             max += AmexMod.config.maxPower;
         }
         return max;
+    }
+
+    public static int getArmorPowerNeed(PlayerEntity player, EquipmentSlot slot) {
+        return getModulesOnArmor(player.getEquippedStack(slot)).stream().filter(module -> module instanceof AmexArmorModule).mapToInt(AmexModule::powerUsage).sum();
     }
 }

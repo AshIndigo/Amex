@@ -28,7 +28,7 @@ public class AmexHelper {
                 CompoundTag modTag = (CompoundTag) cTag;
                 if (ModuleManager.isArmor(Identifier.tryParse(modTag.getString(ModuleManager.MODKEY)))) {
                     AmexArmorModule module = ((AmexArmorModule) ModuleManager.getModule(Identifier.tryParse(modTag.getString(ModuleManager.MODKEY))));
-                    if (module.isValidForSlot(slot) && ModuleManager.hasPower(tag, module.powerUsage())) {
+                    if (module.isValidForSlot(slot)) {
                         protection += module.getProtection()[slot.getEntitySlotId()];
                     }
                 }

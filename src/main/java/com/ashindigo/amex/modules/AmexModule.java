@@ -3,6 +3,7 @@ package com.ashindigo.amex.modules;
 import com.ashindigo.amex.ModuleManager;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
@@ -37,12 +38,13 @@ public class AmexModule {
 
     /**
      * Runs every tick
-     * Will by default, take power per tick.
+     * Will by default, take power per second.
      * @param stack Armor's itemstack
      * @param entity The entity wearing the armor
      */
-    public void onTick(ItemStack stack, LivingEntity entity) {
+    public void onTick(ItemStack stack, PlayerEntity entity) {
         if (powerUsage() > 0) { // Don't bother subtracting power if it's 0
+            if (entity.age % 20 == 0)
             ModuleManager.takePowerWithCheck(entity, powerUsage());
         }
     }

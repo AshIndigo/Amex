@@ -8,39 +8,39 @@ import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 public class AmexConfig implements ConfigData {
 
     // Max Power per armor
-    int maxPower = 100;
+    public int maxPower = 100;
 
     @ConfigEntry.Gui.CollapsibleObject
-    PowerUsageValues powerUsageValues = new PowerUsageValues();
+    public PowerUsageValues powerUsageValues = new PowerUsageValues();
 
     @ConfigEntry.Gui.CollapsibleObject
-    GeneratorValues generatorValues  = new GeneratorValues();
+    public GeneratorValues generatorValues  = new GeneratorValues();
 
 
     static class PowerUsageValues {
 
         // Armor power usage
-        int ironPlatingPower = 2;
-        int diamondPlatingPower = 5;
+        public int ironPlatingPower = 2;
+        public int diamondPlatingPower = 5;
 
         // Modules power usage
-        int rebreatherPower = 5;
-        int elytraUsage = 2;
-        int speedUsage = 1;
-        int damageUsage = 1;
-        int jumpUsage = 3;
-        int fallResistUsage = 5;
+        public int rebreatherPower = 5;
+        public int elytraUsage = 2;
+        public int speedUsage = 1;
+        public int damageUsage = 1;
+        public int jumpUsage = 3;
+        public int fallResistUsage = 5;
 
         // HUD
-        int compassUsage = 0;
-        int clockUsage = 0;
-        int lightUsage = 0;
+        public  int compassUsage = 0;
+        public int clockUsage = 0;
+        public int lightUsage = 0;
     }
 
     static class GeneratorValues {
         // Generator values
-        int kineticGenerator = 1;
-        int solarGenerator = 1;
-        int heatGenerator = 2;
+        public int kineticGenerator = 1;
+        public int solarGenerator = 1;
+        public int heatGenerator = 2;
     }
 }

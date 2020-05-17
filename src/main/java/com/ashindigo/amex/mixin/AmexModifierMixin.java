@@ -31,20 +31,20 @@ public abstract class AmexModifierMixin {
 
 	@Shadow @Nullable public abstract CompoundTag getTag();
 
-	@Inject(method = "getAttributeModifiers", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
-	protected void onGetAttributeModifiers(EquipmentSlot slot, CallbackInfoReturnable<Multimap<String, EntityAttributeModifier>> info) {
-			if (this.getItem() instanceof AmexArmor && hasTag() && slot.getType() == EquipmentSlot.Type.ARMOR && slot == ((AmexArmor) this.getItem()).getSlotType()) {
-				Multimap<String, EntityAttributeModifier>  info2 = info.getReturnValue();
-				info2.clear();
-				info2.put(EntityAttributes.ARMOR.getId(), new EntityAttributeModifier(MODIFIERS[slot.getEntitySlotId()], "Armor modifier", AmexHelper.getProtection(slot, getTag()), EntityAttributeModifier.Operation.ADDITION));
-				info2.put(EntityAttributes.ARMOR_TOUGHNESS.getId(), new EntityAttributeModifier(MODIFIERS[slot.getEntitySlotId()], "Armor toughness", AmexHelper.getToughness(slot, getTag()), EntityAttributeModifier.Operation.ADDITION));
-				info2.put(EntityAttributes.MOVEMENT_SPEED.getId(), new EntityAttributeModifier(MODIFIERS[slot.getEntitySlotId()], "Movement Speed", AmexHelper.getSpeed(slot, getTag()), EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
-				info2.put(EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(MODIFIERS[slot.getEntitySlotId()], "Damage", AmexHelper.getDamage(slot, getTag()), EntityAttributeModifier.Operation.ADDITION));
-				info.setReturnValue(info2);
-			} else {
-				Multimap<String, EntityAttributeModifier>  info2 = info.getReturnValue();
-				info2.clear();
-				info.setReturnValue(info2);
-			}
-	}
+//	@Inject(method = "getAttributeModifiers", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+//	protected void onGetAttributeModifiers(EquipmentSlot slot, CallbackInfoReturnable<Multimap<String, EntityAttributeModifier>> info) {
+//			if (this.getItem() instanceof AmexArmor && hasTag() && slot.getType() == EquipmentSlot.Type.ARMOR && slot == ((AmexArmor) this.getItem()).getSlotType()) {
+//				Multimap<String, EntityAttributeModifier>  info2 = info.getReturnValue();
+//				info2.clear();
+//				info2.put(EntityAttributes.ARMOR.getId(), new EntityAttributeModifier(MODIFIERS[slot.getEntitySlotId()], "Armor modifier", AmexHelper.getProtection(slot, getTag()), EntityAttributeModifier.Operation.ADDITION));
+//				info2.put(EntityAttributes.ARMOR_TOUGHNESS.getId(), new EntityAttributeModifier(MODIFIERS[slot.getEntitySlotId()], "Armor toughness", AmexHelper.getToughness(slot, getTag()), EntityAttributeModifier.Operation.ADDITION));
+//				info2.put(EntityAttributes.MOVEMENT_SPEED.getId(), new EntityAttributeModifier(MODIFIERS[slot.getEntitySlotId()], "Movement Speed", AmexHelper.getSpeed(slot, getTag()), EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+//				info2.put(EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(MODIFIERS[slot.getEntitySlotId()], "Damage", AmexHelper.getDamage(slot, getTag()), EntityAttributeModifier.Operation.ADDITION));
+//				info.setReturnValue(info2);
+//			} else {
+//				Multimap<String, EntityAttributeModifier>  info2 = info.getReturnValue();
+//				info2.clear();
+//				info.setReturnValue(info2);
+//			}
+//	}
 }

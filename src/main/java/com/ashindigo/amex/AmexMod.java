@@ -24,14 +24,14 @@ public class AmexMod implements ModInitializer {
     public static final String MODID = "amex";
     public static BlockEntityType<?> UPGRADE_TABLE_ENTITY;
     public static ItemGroup AMEX_GROUP;
-    static AmexConfig config;
+    public static AmexConfig config;
     // TODO - Code
     // Upgrade table, does... it actually need a container and block entity? - Gotta figure out how to just open up a screen with no need for a container
-    // Module/Armor code
-    // - More than one armor, at the cost a future weight system?
-    // - Power system? Bug Vini for tech mod?
-    // - Module could specify its power usage a tick
-    // - Would need generator modules
+    // Power system is all fucked up at the moment, need to fix that entirely
+    // Maybe... an entirely different power library?
+    // - Need each armor to hold power
+    // - Need the value to update
+    // - Maybe some form of updated interface design?
 
     // TODO - Modules
     // Check - Z level issue - Vini needed? Maybe it doesn't respect z value upon initial draw?
@@ -41,6 +41,7 @@ public class AmexMod implements ModInitializer {
     // Model files - Upgrade table should get custom model, or at least workbench like
     // Good comments
     // API Package? Or just make people use dev version of mod
+    // God I want 1.16 to come out
 
     // TODO - Texture
     // Armor Texture

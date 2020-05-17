@@ -1,5 +1,7 @@
 package com.ashindigo.amex.item;
 
+import com.ashindigo.amex.AmexConfig;
+import com.ashindigo.amex.AmexMod;
 import com.ashindigo.amex.BlankArmorMaterial;
 import com.ashindigo.amex.ModuleManager;
 import com.ashindigo.amex.modules.AmexModule;
@@ -10,6 +12,7 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -35,8 +38,8 @@ public class AmexArmor extends ArmorItem {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         for (AmexModule module : ModuleManager.getModulesOnArmor(stack)) {
-            if (entity instanceof LivingEntity) {
-                module.onTick(stack, (LivingEntity) entity);
+            if (entity instanceof PlayerEntity) {
+                module.onTick(stack, (PlayerEntity) entity);
             }
         }
 
@@ -45,6 +48,7 @@ public class AmexArmor extends ArmorItem {
     @Override
     @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        tooltip.add(new LiteralText("Energy: " + ModuleManager.getCurrentPower(stack) + "/" + AmexMod.config.maxPower));
         if (((AmexArmor) stack.getItem()).slot == EquipmentSlot.FEET) {
             tooltip.add(new LiteralText("+" + ModuleManager.getConfiguredValue(stack, ModuleManager.JUMP) + " ").append(new TranslatableText("text.amex.jump_boost")).setStyle(new Style().setColor(Formatting.BLUE)));
         }

@@ -36,9 +36,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method= "attackLivingEntity(Lnet/minecraft/entity/LivingEntity;)V", at = @At("RETURN"))
     protected void attackLivingEntity(LivingEntity entity, CallbackInfo info) {
-        if (entity.isAttackable() && !entity.handleAttack(entity)) {
+        if (entity.isAttackable() && !entity.handleAttack(entity)) { // TODO What the fuck?
             if (ModuleManager.hasModule(this.getEquippedStack(EquipmentSlot.CHEST), ModuleManager.DAMAGE)) {
-                ModuleManager.takePowerWithCheck(entity, ModuleManager.DAMAGE.powerUsage());
+                ModuleManager.takePowerWithCheck((PlayerEntity) world.getEntityById(getEntityId()), ModuleManager.DAMAGE.powerUsage());
             }
         }
     }
