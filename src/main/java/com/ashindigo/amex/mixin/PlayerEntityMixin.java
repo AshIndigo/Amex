@@ -1,6 +1,7 @@
 package com.ashindigo.amex.mixin;
 
 import com.ashindigo.amex.ModuleManager;
+import com.ashindigo.amex.power.PowerManager;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -38,7 +39,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     protected void attackLivingEntity(LivingEntity entity, CallbackInfo info) {
         if (entity.isAttackable() && !entity.handleAttack(entity)) { // TODO What the fuck?
             if (ModuleManager.hasModule(this.getEquippedStack(EquipmentSlot.CHEST), ModuleManager.DAMAGE)) {
-                ModuleManager.takePowerWithCheck((PlayerEntity) world.getEntityById(getEntityId()), ModuleManager.DAMAGE.powerUsage());
+                PowerManager.takePlayerPower((PlayerEntity) world.getEntityById(getEntityId()), ModuleManager.DAMAGE.powerUsage());
             }
         }
     }

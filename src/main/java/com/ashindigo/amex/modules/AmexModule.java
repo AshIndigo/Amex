@@ -1,6 +1,7 @@
 package com.ashindigo.amex.modules;
 
 import com.ashindigo.amex.ModuleManager;
+import com.ashindigo.amex.power.PowerManager;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -44,8 +45,8 @@ public class AmexModule {
      */
     public void onTick(ItemStack stack, PlayerEntity entity) {
         if (powerUsage() > 0) { // Don't bother subtracting power if it's 0
-            if (entity.age % 20 == 0)
-            ModuleManager.takePowerWithCheck(entity, powerUsage());
+            if (entity.world.getTime() % 20 == 0)
+                PowerManager.takePlayerPower(entity, powerUsage());
         }
     }
 
@@ -66,4 +67,8 @@ public class AmexModule {
     }
 
     public int powerUsage() { return power.getAsInt(); }
+
+    public EquipmentSlot[] getEquipmentSlots() {
+        return equipmentSlots;
+    }
 }

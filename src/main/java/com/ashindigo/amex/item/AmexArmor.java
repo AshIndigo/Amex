@@ -5,6 +5,7 @@ import com.ashindigo.amex.AmexMod;
 import com.ashindigo.amex.BlankArmorMaterial;
 import com.ashindigo.amex.ModuleManager;
 import com.ashindigo.amex.modules.AmexModule;
+import com.ashindigo.amex.power.PowerManager;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -39,7 +40,8 @@ public class AmexArmor extends ArmorItem {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         for (AmexModule module : ModuleManager.getModulesOnArmor(stack)) {
             if (entity instanceof PlayerEntity) {
-                module.onTick(stack, (PlayerEntity) entity);
+                if (((PlayerEntity) entity).getEquippedStack(EquipmentSlot.fromTypeIndex(EquipmentSlot.Type.ARMOR, slot)).equals(stack))
+                    module.onTick(stack, (PlayerEntity) entity);
             }
         }
 
@@ -48,7 +50,7 @@ public class AmexArmor extends ArmorItem {
     @Override
     @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(new LiteralText("Energy: " + ModuleManager.getCurrentPower(stack) + "/" + AmexMod.config.maxPower));
+        tooltip.add(new LiteralText("Energy: " + PowerManager.getPower(stack) + "/" + AmexMod.config.maxPower));
         if (((AmexArmor) stack.getItem()).slot == EquipmentSlot.FEET) {
             tooltip.add(new LiteralText("+" + ModuleManager.getConfiguredValue(stack, ModuleManager.JUMP) + " ").append(new TranslatableText("text.amex.jump_boost")).setStyle(new Style().setColor(Formatting.BLUE)));
         }

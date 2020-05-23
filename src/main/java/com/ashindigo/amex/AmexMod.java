@@ -27,11 +27,6 @@ public class AmexMod implements ModInitializer {
     public static AmexConfig config;
     // TODO - Code
     // Upgrade table, does... it actually need a container and block entity? - Gotta figure out how to just open up a screen with no need for a container
-    // Power system is all fucked up at the moment, need to fix that entirely
-    // Maybe... an entirely different power library?
-    // - Need each armor to hold power
-    // - Need the value to update
-    // - Maybe some form of updated interface design?
 
     // TODO - Modules
     // Check - Z level issue - Vini needed? Maybe it doesn't respect z value upon initial draw?

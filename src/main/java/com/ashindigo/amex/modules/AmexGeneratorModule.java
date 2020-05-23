@@ -1,6 +1,7 @@
 package com.ashindigo.amex.modules;
 
 import com.ashindigo.amex.ModuleManager;
+import com.ashindigo.amex.power.PowerManager;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,7 +30,7 @@ public class AmexGeneratorModule extends AmexModule {
     @Override
     public void onTick(ItemStack stack, PlayerEntity entity) {
         if (entity.age % 20 == 0)
-        ModuleManager.addPowerWithCheck(entity, powerGen.getAsInt());
+        PowerManager.givePlayerPower(entity, powerGen.getAsInt());
     }
 
     public int getPowerGen() {

@@ -58,7 +58,7 @@ public class AmexHelper {
         return 0.0D;
     }
 
-    public static double getSpeed(EquipmentSlot slot, CompoundTag tag) {
+    public static double getSpeed(CompoundTag tag) {
         if (tag == null) return 0.0;
         if (tag.isEmpty()) return 0.0;
         if (tag.contains(ModuleManager.LISTNAME)) {
@@ -72,7 +72,7 @@ public class AmexHelper {
         return 0.0D;
     }
 
-    public static double getDamage(EquipmentSlot slot, CompoundTag tag) {
+    public static double getDamage(CompoundTag tag) {
         if (tag == null) return 0.0;
         if (tag.isEmpty()) return 0.0;
         if (tag.contains(ModuleManager.LISTNAME)) {
