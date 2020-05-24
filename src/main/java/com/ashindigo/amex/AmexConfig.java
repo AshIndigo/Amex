@@ -5,7 +5,7 @@ import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 
 @Config(name = AmexMod.MODID)
-public class AmexConfig implements ConfigData {
+public class AmexConfig implements ConfigData { // TODO Proper value balancing
 
     // Max Power per armor
     public int maxPower = 100;

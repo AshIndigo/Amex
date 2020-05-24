@@ -4,6 +4,7 @@ import com.ashindigo.amex.modules.AmexArmorModule;
 import com.ashindigo.amex.modules.AmexGeneratorModule;
 import com.ashindigo.amex.modules.AmexModule;
 import com.ashindigo.amex.power.PowerManager;
+import net.minecraft.client.Keyboard;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -14,6 +15,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.Identifier;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -65,7 +67,7 @@ public class ModuleManager {
                     PowerManager.takePlayerPower(entity, powerUsage());
                 }
             } else {
-                HelperMethods.setAttributeModifier(stack, EntityAttributes.MOVEMENT_SPEED.getId(), new EntityAttributeModifier(MODIFIERS[this.getEquipmentSlots()[0].getEntitySlotId()], "Movement Speed", 0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL), this.getEquipmentSlots()[0]);
+                HelperMethods.setAttributeModifier(stack, EntityAttributes.MOVEMENT_SPEED.getId(), new EntityAttributeModifier(MODIFIERS[this.getEquipmentSlots()[0].getEntitySlotId()], "Movement Speed", 0, EntityAttributeModifier.Operation.MULTIPLY_BASE), this.getEquipmentSlots()[0]);
             }
         }
     });
@@ -74,7 +76,6 @@ public class ModuleManager {
         public void onTick(ItemStack stack, PlayerEntity entity) {
             if (PowerManager.getPlayerPower(entity) > powerUsage()) {
                 HelperMethods.setAttributeModifier(stack, EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(MODIFIERS[getEquipmentSlots()[0].getEntitySlotId()], "Damage", AmexHelper.getDamage(stack.getOrCreateTag()), EntityAttributeModifier.Operation.ADDITION), this.getEquipmentSlots()[0]);
-                PowerManager.takePlayerPower(entity, powerUsage());
             } else {
                 HelperMethods.setAttributeModifier(stack, EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(MODIFIERS[getEquipmentSlots()[0].getEntitySlotId()], "Damage", 0, EntityAttributeModifier.Operation.ADDITION), this.getEquipmentSlots()[0]);
             }
@@ -100,8 +101,7 @@ public class ModuleManager {
     // Generators
     public static final AmexGeneratorModule HEAT = (AmexGeneratorModule) register(new AmexGeneratorModule(new Identifier(AmexMod.MODID, "heat_gen"), new ItemStack(ItemRegistry.HEAT_GEN), new EquipmentSlot[]{EquipmentSlot.CHEST}, false, () -> AmexMod.config.generatorValues.heatGenerator) {
         @Override
-        public void onTick(ItemStack stack, PlayerEntity entity) {
-            // Gotta check if entity is close to heat
+        public void onTick(ItemStack stack, PlayerEntity entity) { // TODO Gotta write
         }
     });
     public static final AmexGeneratorModule SOLAR = (AmexGeneratorModule) register(new AmexGeneratorModule(new Identifier(AmexMod.MODID, "solar_gen"), new ItemStack(ItemRegistry.SOLAR_GEN), new EquipmentSlot[]{EquipmentSlot.HEAD}, false, () -> AmexMod.config.generatorValues.solarGenerator) {
@@ -114,7 +114,7 @@ public class ModuleManager {
     });
     public static final AmexGeneratorModule KINETIC = (AmexGeneratorModule) register(new AmexGeneratorModule(new Identifier(AmexMod.MODID, "kinetic_gen"), new ItemStack(ItemRegistry.KINETIC_GEN), new EquipmentSlot[]{EquipmentSlot.LEGS}, false, () -> AmexMod.config.generatorValues.kineticGenerator) {
         @Override
-        public void onTick(ItemStack stack, PlayerEntity entity) {
+        public void onTick(ItemStack stack, PlayerEntity entity) { // TODO Make sure it's working
             if (entity.getVelocity().x > 0.04 || entity.getVelocity().z > 0.04) {
                 super.onTick(stack, entity);
             }

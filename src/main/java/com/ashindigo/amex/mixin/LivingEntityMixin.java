@@ -8,6 +8,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -32,11 +33,13 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(method = "computeFallDamage(FF)I", at = @At("RETURN"), cancellable = true)
-    protected void calculateFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Integer> info) { // TODO Gotta make sure it's actual fall damage
-        if (ModuleManager.hasModule(this.getEquippedStack(EquipmentSlot.FEET), ModuleManager.FALL_RESIST) && PowerManager.getPlayerPower((PlayerEntity) world.getEntityById(getEntityId())) >= ModuleManager.FALL_RESIST.powerUsage()) {
-            PowerManager.takePlayerPower((PlayerEntity) world.getEntityById(getEntityId()), ModuleManager.FALL_RESIST.powerUsage());
-            info.setReturnValue(0);
-            info.cancel();
+    protected void calculateFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Integer> info) {
+        if (MathHelper.ceil((fallDistance - 3.0F) * damageMultiplier) > 0) {
+            if (ModuleManager.hasModule(this.getEquippedStack(EquipmentSlot.FEET), ModuleManager.FALL_RESIST) && PowerManager.getPlayerPower((PlayerEntity) world.getEntityById(getEntityId())) >= ModuleManager.FALL_RESIST.powerUsage()) {
+                PowerManager.takePlayerPower((PlayerEntity) world.getEntityById(getEntityId()), ModuleManager.FALL_RESIST.powerUsage());
+                info.setReturnValue(0);
+                info.cancel();
+            }
         }
     }
 

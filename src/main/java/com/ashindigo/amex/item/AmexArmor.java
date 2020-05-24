@@ -9,6 +9,7 @@ import com.ashindigo.amex.power.PowerManager;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -40,7 +41,7 @@ public class AmexArmor extends ArmorItem {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         for (AmexModule module : ModuleManager.getModulesOnArmor(stack)) {
             if (entity instanceof PlayerEntity) {
-                if (((PlayerEntity) entity).getEquippedStack(EquipmentSlot.fromTypeIndex(EquipmentSlot.Type.ARMOR, slot)).equals(stack))
+                if (((PlayerEntity) entity).getEquippedStack(this.slot).equals(stack))
                     module.onTick(stack, (PlayerEntity) entity);
             }
         }
@@ -52,7 +53,9 @@ public class AmexArmor extends ArmorItem {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add(new LiteralText("Energy: " + PowerManager.getPower(stack) + "/" + AmexMod.config.maxPower));
         if (((AmexArmor) stack.getItem()).slot == EquipmentSlot.FEET) {
-            tooltip.add(new LiteralText("+" + ModuleManager.getConfiguredValue(stack, ModuleManager.JUMP) + " ").append(new TranslatableText("text.amex.jump_boost")).setStyle(new Style().setColor(Formatting.BLUE)));
+            if (MinecraftClient.getInstance().player != null) {
+                tooltip.add(new LiteralText("+" + (PowerManager.getPlayerPower(MinecraftClient.getInstance().player) > ModuleManager.JUMP.powerUsage() ? ModuleManager.getConfiguredValue(stack, ModuleManager.JUMP) : "0") + " ").append(new TranslatableText("text.amex.jump_boost")).setStyle(new Style().setColor(Formatting.BLUE)));
+            }
         }
     }
 

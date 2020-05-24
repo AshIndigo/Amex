@@ -2,6 +2,7 @@ package com.ashindigo.amex.mixin;
 
 import com.ashindigo.amex.ModuleManager;
 import com.ashindigo.amex.power.PowerManager;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -35,9 +36,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         }
     }
 
-    @Inject(method= "attackLivingEntity(Lnet/minecraft/entity/LivingEntity;)V", at = @At("RETURN"))
-    protected void attackLivingEntity(LivingEntity entity, CallbackInfo info) {
-        if (entity.isAttackable() && !entity.handleAttack(entity)) { // TODO What the fuck?
+    @Inject(method= "attack(Lnet/minecraft/entity/Entity;)V", at = @At("RETURN"))
+    protected void attackLivingEntity(Entity attacked, CallbackInfo info) {
+        if (attacked.isAttackable() && !attacked.handleAttack(world.getEntityById(getEntityId()))) {
             if (ModuleManager.hasModule(this.getEquippedStack(EquipmentSlot.CHEST), ModuleManager.DAMAGE)) {
                 PowerManager.takePlayerPower((PlayerEntity) world.getEntityById(getEntityId()), ModuleManager.DAMAGE.powerUsage());
             }
