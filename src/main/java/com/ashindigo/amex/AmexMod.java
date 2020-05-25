@@ -9,6 +9,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.mob.SkeletonEntity;
@@ -27,6 +28,7 @@ public class AmexMod implements ModInitializer {
     public static AmexConfig config;
     // TODO - Code
     // Upgrade table, does... it actually need a container and block entity? - Gotta figure out how to just open up a screen with no need for a container
+    // Concern for certain modules, certain values may not be reset upon armor removal i.e autostep
 
     // TODO - Modules
     // Check - Z level issue - Vini needed? Maybe it doesn't respect z value upon initial draw?

@@ -30,6 +30,7 @@ public class AmexConfig implements ConfigData { // TODO Proper value balancing
         public int damageUsage = 1;
         public int jumpUsage = 3;
         public int fallResistUsage = 5;
+        public int autoStepUsage = 5;
 
         // HUD
         public  int compassUsage = 0;

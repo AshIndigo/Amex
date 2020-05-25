@@ -1,6 +1,7 @@
 package com.ashindigo.amex.mixin;
 
 import com.ashindigo.amex.ModuleManager;
+import com.ashindigo.amex.item.AmexArmor;
 import com.ashindigo.amex.power.PowerManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -20,6 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Shadow public abstract void startFallFlying();
+
+    @Shadow public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -44,4 +47,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             }
         }
     }
+
+
 }

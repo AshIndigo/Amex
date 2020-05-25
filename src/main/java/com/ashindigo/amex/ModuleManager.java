@@ -4,6 +4,7 @@ import com.ashindigo.amex.modules.AmexArmorModule;
 import com.ashindigo.amex.modules.AmexGeneratorModule;
 import com.ashindigo.amex.modules.AmexModule;
 import com.ashindigo.amex.power.PowerManager;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Keyboard;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -90,6 +91,18 @@ public class ModuleManager {
         @Override
         public void onTick(ItemStack stack, PlayerEntity entity) {
 
+        }
+    });
+
+    public static final AmexModule AUTO_STEP = register(new AmexModule(new Identifier(AmexMod.MODID, "auto_step"), new ItemStack(Blocks.PISTON), new EquipmentSlot[]{EquipmentSlot.FEET}, false, () -> AmexMod.config.powerUsageValues.autoStepUsage) {
+        @Override
+        public void onTick(ItemStack stack, PlayerEntity entity) {
+            if (PowerManager.getPlayerPower(entity) > powerUsage()) {
+                entity.stepHeight = 1F;
+                PowerManager.takePlayerPower(entity, powerUsage());
+            } else {
+                entity.stepHeight = .5F;
+            }
         }
     });
 
@@ -283,7 +296,7 @@ public class ModuleManager {
             }
         }
         stack.getOrCreateTag().put(LISTNAME, tag);
-        
+
     }
 
 }
