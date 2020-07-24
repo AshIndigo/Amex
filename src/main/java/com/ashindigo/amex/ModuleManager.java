@@ -9,8 +9,12 @@ import net.minecraft.client.Keyboard;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorMaterials;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -63,12 +67,12 @@ public class ModuleManager {
         @Override
         public void onTick(ItemStack stack, PlayerEntity entity) {
             if (PowerManager.getPlayerPower(entity) > powerUsage()) { // TODO Power usage/when it's actually used
-                HelperMethods.setAttributeModifier(stack, EntityAttributes.MOVEMENT_SPEED.getId(), new EntityAttributeModifier(MODIFIERS[this.getEquipmentSlots()[0].getEntitySlotId()], "Movement Speed", AmexHelper.getSpeed(stack.getOrCreateTag()), EntityAttributeModifier.Operation.MULTIPLY_TOTAL), this.getEquipmentSlots()[0]);
+                HelperMethods.setAttributeModifier(stack, EntityAttributes.GENERIC_MOVEMENT_SPEED.getTranslationKey().replace("attribute.name.", ""), new EntityAttributeModifier(MODIFIERS[this.getEquipmentSlots()[0].getEntitySlotId()], "Movement Speed", AmexHelper.getSpeed(stack.getOrCreateTag()), EntityAttributeModifier.Operation.MULTIPLY_TOTAL), this.getEquipmentSlots()[0]);
                 if (entity.getVelocity().x < 0.04 || entity.getVelocity().z < 0.04) {
                     PowerManager.takePlayerPower(entity, powerUsage());
                 }
             } else {
-                HelperMethods.setAttributeModifier(stack, EntityAttributes.MOVEMENT_SPEED.getId(), new EntityAttributeModifier(MODIFIERS[this.getEquipmentSlots()[0].getEntitySlotId()], "Movement Speed", 0, EntityAttributeModifier.Operation.MULTIPLY_BASE), this.getEquipmentSlots()[0]);
+                HelperMethods.setAttributeModifier(stack, EntityAttributes.GENERIC_MOVEMENT_SPEED.getTranslationKey().replace("attribute.name.", ""), new EntityAttributeModifier(MODIFIERS[this.getEquipmentSlots()[0].getEntitySlotId()], "Movement Speed", 0, EntityAttributeModifier.Operation.MULTIPLY_BASE), this.getEquipmentSlots()[0]);
             }
         }
     });
@@ -76,9 +80,9 @@ public class ModuleManager {
         @Override
         public void onTick(ItemStack stack, PlayerEntity entity) {
             if (PowerManager.getPlayerPower(entity) > powerUsage()) {
-                HelperMethods.setAttributeModifier(stack, EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(MODIFIERS[getEquipmentSlots()[0].getEntitySlotId()], "Damage", AmexHelper.getDamage(stack.getOrCreateTag()), EntityAttributeModifier.Operation.ADDITION), this.getEquipmentSlots()[0]);
+                HelperMethods.setAttributeModifier(stack, EntityAttributes.GENERIC_ATTACK_DAMAGE.getTranslationKey().replace("attribute.name.", ""), new EntityAttributeModifier(MODIFIERS[getEquipmentSlots()[0].getEntitySlotId()], "Damage", AmexHelper.getDamage(stack.getOrCreateTag()), EntityAttributeModifier.Operation.ADDITION), this.getEquipmentSlots()[0]);
             } else {
-                HelperMethods.setAttributeModifier(stack, EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(MODIFIERS[getEquipmentSlots()[0].getEntitySlotId()], "Damage", 0, EntityAttributeModifier.Operation.ADDITION), this.getEquipmentSlots()[0]);
+                HelperMethods.setAttributeModifier(stack, EntityAttributes.GENERIC_ATTACK_DAMAGE.getTranslationKey().replace("attribute.name.", ""), new EntityAttributeModifier(MODIFIERS[getEquipmentSlots()[0].getEntitySlotId()], "Damage", 0, EntityAttributeModifier.Operation.ADDITION), this.getEquipmentSlots()[0]);
             }
         }
     });
@@ -103,6 +107,15 @@ public class ModuleManager {
             } else {
                 entity.stepHeight = .5F;
             }
+        }
+    });
+
+    public static final AmexModule NIGHT_VISION = register(new AmexModule(new Identifier(AmexMod.MODID, "night_vision"), new ItemStack(ItemRegistry.NIGHT_VISION), new EquipmentSlot[]{EquipmentSlot.HEAD}, false, () -> AmexMod.config.powerUsageValues.nightVisionUsage) {
+        @Override
+        public void onTick(ItemStack stack, PlayerEntity entity) {
+            super.onTick(stack, entity);
+            if (!entity.hasStatusEffect(StatusEffects.NIGHT_VISION))
+            entity.applyStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 20 * 13, 0));
         }
     });
 

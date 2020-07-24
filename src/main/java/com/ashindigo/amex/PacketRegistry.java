@@ -21,7 +21,7 @@ public class PacketRegistry {
                     ItemStack armor = packetContext.getPlayer().getEquippedStack(slot);
                     if (packetContext.getPlayer().inventory.contains(ModuleManager.getModule(moduleName).getItemStack())) {
                         if (!ModuleManager.hasModule(armor, ModuleManager.getModule(moduleName))) {
-                            packetContext.getPlayer().inventory.takeInvStack(packetContext.getPlayer().inventory.getSlotWithStack(ModuleManager.getModule(moduleName).getItemStack()), 1);
+                            packetContext.getPlayer().inventory.removeStack(packetContext.getPlayer().inventory.getSlotWithStack(ModuleManager.getModule(moduleName).getItemStack()), 1);
                             ModuleManager.addModule(armor, ModuleManager.getModule(moduleName));
                             packetContext.getPlayer().inventory.markDirty();
                             packetContext.getPlayer().playerScreenHandler.sendContentUpdates();

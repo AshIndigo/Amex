@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.6-SNAPSHOT'
+	id 'fabric-loom' version '0.4-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -28,10 +28,10 @@ dependencies {
 
 	modCompile "com.github.vini2003:spinnery:${project.spinnery_version}"
 	include "com.github.vini2003:spinnery:${project.spinnery_version}"
-	include "me.sargunvohra.mcmods:autoconfig1u:2.1.0"
-	modApi "me.sargunvohra.mcmods:autoconfig1u:2.1.0"
-	modApi "io.github.prospector:modmenu:1.11.0+build.2"
-    modApi "me.shedaniel.cloth:config-2:3.3.1-unstable"
+	include "me.sargunvohra.mcmods:autoconfig1u:3.2.0-unstable"
+	modApi "me.sargunvohra.mcmods:autoconfig1u:3.2.0-unstable"
+	modApi "io.github.prospector:modmenu:1.12.2+build.17"
+    modApi "me.shedaniel.cloth:config-2:4.5.6"
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
 }

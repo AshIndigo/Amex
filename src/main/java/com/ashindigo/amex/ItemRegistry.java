@@ -20,6 +20,7 @@ public class ItemRegistry {
     public static Item REBREATHER;
     public static Item FALL_PADS;
     public static Item ARTIFICIAL_MUSCLE; // Used for legs and chest and boot upgrades.
+    public static Item NIGHT_VISION;
     // Generators
     public static Item HEAT_GEN;
     public static Item SOLAR_GEN;
@@ -35,6 +36,7 @@ public class ItemRegistry {
         REBREATHER = register("rebreather", new Item(new Item.Settings().group(AmexMod.AMEX_GROUP)));
         FALL_PADS = register("fall_pads", new Item(new Item.Settings().group(AmexMod.AMEX_GROUP)));
         ARTIFICIAL_MUSCLE = register("artificial_muscle", new Item(new Item.Settings().group(AmexMod.AMEX_GROUP)));
+        NIGHT_VISION = register("night_vision", new Item(new Item.Settings().group(AmexMod.AMEX_GROUP)));
         HEAT_GEN = register("heat_gen", new Item(new Item.Settings().group(AmexMod.AMEX_GROUP)));
         SOLAR_GEN = register("solar_gen", new Item(new Item.Settings().group(AmexMod.AMEX_GROUP)));
         KINETIC_GEN = register("kinetic_gen", new Item(new Item.Settings().group(AmexMod.AMEX_GROUP)));

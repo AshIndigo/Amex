@@ -33,7 +33,7 @@ public class HelperMethods {
         }
 
         ListTag listTag = tag.getList("AttributeModifiers", 10);
-        CompoundTag compoundTag = EntityAttributes.toTag(modifier);
+        CompoundTag compoundTag = modifier.toTag();
         compoundTag.putString("AttributeName", name);
         if (slot != null) {
             compoundTag.putString("Slot", slot.getName());

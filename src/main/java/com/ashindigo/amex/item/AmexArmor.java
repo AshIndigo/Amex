@@ -54,7 +54,7 @@ public class AmexArmor extends ArmorItem {
         tooltip.add(new LiteralText("Energy: " + PowerManager.getPower(stack) + "/" + AmexMod.config.maxPower));
         if (((AmexArmor) stack.getItem()).slot == EquipmentSlot.FEET) {
             if (MinecraftClient.getInstance().player != null) {
-                tooltip.add(new LiteralText("+" + (PowerManager.getPlayerPower(MinecraftClient.getInstance().player) > ModuleManager.JUMP.powerUsage() ? ModuleManager.getConfiguredValue(stack, ModuleManager.JUMP) : "0") + " ").append(new TranslatableText("text.amex.jump_boost")).setStyle(new Style().setColor(Formatting.BLUE)));
+                tooltip.add(new LiteralText("+" + (PowerManager.getPlayerPower(MinecraftClient.getInstance().player) > ModuleManager.JUMP.powerUsage() ? ModuleManager.getConfiguredValue(stack, ModuleManager.JUMP) : "0") + " ").append(new TranslatableText("text.amex.jump_boost")).setStyle(Style.EMPTY.withColor(Formatting.BLUE)));
             }
         }
     }

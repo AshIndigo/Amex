@@ -1,11 +1,17 @@
 package com.ashindigo.amex.upgradetable;
 
+import com.ashindigo.amex.AmexMod;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.math.BlockPos;
-import spinnery.common.BaseScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
+import spinnery.common.container.BaseContainer;
 
-public class UpgradeTableContainer extends BaseScreenHandler {
-    public UpgradeTableContainer(int synchronizationID, PlayerInventory linkedPlayerInventory, BlockPos blockPos, int x, int y, int z) {
-        super(synchronizationID, linkedPlayerInventory);
+public class UpgradeTableContainer extends BaseContainer {
+    public UpgradeTableContainer(int synchronizationID, PlayerInventory playerInventory) {
+        super(synchronizationID, playerInventory);
+    }
+
+    @Override
+    public ScreenHandlerType<?> getType() {
+        return AmexMod.tableScreenHandler;
     }
 }
