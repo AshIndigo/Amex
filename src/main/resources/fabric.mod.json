@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.ashindigo.amex.AmexMod"
+      "com.ashindigo.amex.Amex"
     ],
     "client": [
-      "com.ashindigo.amex.AmexModClient"
+      "com.ashindigo.amex.AmexClient"
     ],
     "modmenu": [
       "com.ashindigo.amex.AmexModMenu"
