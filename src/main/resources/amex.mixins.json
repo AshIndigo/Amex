@@ -4,11 +4,8 @@
   "package": "com.ashindigo.amex.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "LivingEntityMixin",
-    "PlayerEntityMixin"
   ],
   "client": [
-    "ClientPlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
